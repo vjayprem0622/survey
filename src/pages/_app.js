@@ -12,20 +12,25 @@ import React, { useEffect } from 'react';
 
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+
+import { createTheme } from '../theme';
+import { ThemeProvider } from '@mui/material';
 import { CssBaseline } from '@mui/material';
+import { BrowserRouter as Router } from 'react-router-dom';
+import { Rubik } from 'next/font/google'
+
+const inter = Rubik({ subsets: ['latin'] })
 
 
-export default function App({ Component, pageProps: { session, ...pageProps } }) {
+export default function App(props) {
 
-  const theme = createTheme({
-    typography: {
-      fontFamily: [
-        'Poppins',
-        'sans-serif',
-      ].join(','),
-    },
-  });
+  const { Component, pageProps } = props;
+
+  const getLayout = Component.getLayout ?? ((page) => page);
+
+  const theme = createTheme();
+
 
   useEffect(() => {
 
@@ -49,16 +54,22 @@ export default function App({ Component, pageProps: { session, ...pageProps } })
   }, [])
 
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <ThemeProvider theme={theme}>
+        <CssBaseline />
         <Provider store={store}>
           <StepsProvider>
-            <Component {...pageProps} />
+
+            <main className={inter.className}>
+              <Component {...pageProps} />
+            </main>
+
+
           </StepsProvider>
         </Provider>
-      </LocalizationProvider>
-    </ThemeProvider>
+      </ThemeProvider>
+    </LocalizationProvider>
+
 
   )
 }

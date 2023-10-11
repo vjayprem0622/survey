@@ -15,11 +15,15 @@ import Toolbar from "@mui/material/Toolbar";
 import Typography from "@mui/material/Typography";
 
 import Head from "next/head";
+import CloseIcon from '@mui/icons-material/Close';
 
 
 import Container from '@mui/material/Container'
 import Paper from '@mui/material/Paper'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
+import Modal from '@mui/material/Modal';
+import Fade from '@mui/material/Fade';
+import Backdrop from '@mui/material/Backdrop';
 
 
 import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
@@ -72,8 +76,26 @@ import { DataGrid } from "@mui/x-data-grid";
 import { AppContext } from "../components/stepper/Context";
 import StepperControl from "../components/stepper/StepperControl";
 import { onGenderList } from "../network/actions/genders";
+import Snackbar from '@mui/material/Snackbar';
+import InfoIcon from '@mui/icons-material/Info';
+
 
 const drawWidth = 220;
+
+
+const style = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    borderRadius: 2,
+    // border: '2px solid #000',
+    boxShadow: 24,
+};
+
+
 
 function Dashboard(props) {
     const [mobileViewOpen, setMobileViewOpen] = React.useState(false);
@@ -92,13 +114,28 @@ function Dashboard(props) {
 
     const [showForm, setShowForm] = useState(false);
 
+    const [snackDetails, setSnackDetails] = useState({ color: "#000", message: "" });
+
+
+
+    const [openInfo, setopenInfo] = React.useState(false);
+    const handleInfoOpen = () => setopenInfo(true);
+    const handleInfoClose = () => setopenInfo(false);
+
+
     const { formValues } = useContext(
         AppContext
     );
 
+    // const [open, setOpen] = React.useState(false);
 
 
-
+    const [state, setState] = React.useState({
+        open: false,
+        vertical: 'top',
+        horizontal: 'center',
+    });
+    const { vertical, horizontal, open } = state;
 
 
 
@@ -151,6 +188,17 @@ function Dashboard(props) {
     const isStepSkipped = (step) => {
         return skipped.has(step);
     };
+
+
+    const handleClick = (newState) => () => {
+        setState({ ...newState, open: true });
+    };
+
+    const handleClose = () => {
+        setState({ ...state, open: false });
+    };
+
+
 
     const handleNext = () => {
         let newSkipped = skipped;
@@ -210,7 +258,7 @@ function Dashboard(props) {
 
             if (status === "OK" && message === "SUCCESS") {
                 setrationList(data);
-
+                setopenInfo(true)
 
 
 
@@ -242,9 +290,31 @@ function Dashboard(props) {
 
 
             }
-            if (rationData.data.length == 0) {
-                setrationList(data);
+            const has404 = rationData?.error?.message.indexOf("404") !== -1;
+
+
+            if (rationData?.error) {
+                if (has404) {
+                    if (rationData.data.length == 0) {
+                        setSnackDetails({ color: "red", message: "No Member Found" })
+                        setState({ ...{ vertical: 'top', horizontal: 'right' }, open: true });
+
+
+                        setrationList(data);
+                    }
+
+
+                    else {
+
+
+                        // handleClick({ vertical: 'top', horizontal: 'right' })
+                        // setOpen(true)
+                    }
+                }
             }
+
+
+
 
 
         }
@@ -272,20 +342,106 @@ function Dashboard(props) {
     };
 
 
+    const action = (
+        <React.Fragment>
+            <Button color="secondary" size="small" onClick={handleClose}>
+                UNDO
+            </Button>
+            <IconButton
+                size="small"
+                aria-label="close"
+                color="inherit"
+                onClick={handleClose}
+            >
+                <CloseIcon fontSize="small" />
+            </IconButton>
+        </React.Fragment>
+    );
+
+
+
     return (
         <div>
             <div>
                 <Layout>
+
+                    <Modal
+                        aria-labelledby="transition-modal-title"
+                        aria-describedby="transition-modal-description"
+                        open={openInfo}
+                        onClose={handleInfoClose}
+                        closeAfterTransition
+                        slots={{ backdrop: Backdrop }}
+                        slotProps={{
+                            backdrop: {
+                                timeout: 500,
+                            },
+                        }}
+                    >
+                        <Fade in={openInfo}>
+
+                            <Box sx={style}>
+
+                                <Typography variant="h4" style={{
+                                    display: 'flex',
+                                    justifyContent: 'center',
+                                    background: "#0b72a9",
+                                    borderTopLeftRadius: 12,
+                                    borderTopRightRadius: 12,
+                                    padding: 10
+                                }}>
+                                    <InfoIcon color="info" />
+                                </Typography>
+
+
+                                {/* <Typography id="transition-modal-title" variant="h6" component="h2">
+                                    Text in a modal
+                                </Typography> */}
+                                <Typography id="transition-modal-description" sx={{ mt: 3, ml: 3, mr: 3, mb: 3 }} style={{ color: '#0b72a9' }} fontWeight={500} >
+                                    Family” means a joint family of all persons descended from a common ancestor including by adoption,
+                                    who live, worship and mess together permanently.
+                                    Ward-wise Parivar Register is being created for every Municipal Council/ Nagar Panchayat OR Municipal Corporation
+                                    in accordance with Section 51-A of the Himachal Pradesh Municipal (Amendment) Act, 2022 OR Section 44-A of the
+                                    Himachal Pradesh Municipal Corporation (Second Amendment) Act, 2022 as the case may be. Parivar Register shall contain
+                                    the names and particulars of all persons, family-wise, who are Citizen of India and the “Bonafide Residents” which forms
+                                    part of the Ward Sabha area. \n \n  “Bonafide resident” means a person who has a permanent home in Himachal Pradesh and
+                                    includes a person who has been residing in Himachal Pradesh for a period of not less than 20 years or a person who has
+                                    permanent home in Himachal Pradesh but on account of his occupation he is living outside Himachal Pradesh.
+                                </Typography>
+
+                                <Button
+                                    fullWidth
+                                    variant="contained"
+                                    style={{ backgroundColor: 'rgb(59 130 246)', height: 54, borderRadius: 0 }}
+                                    onClick={() => {
+                                        setopenInfo(false);
+                                    }}
+                                >
+                                    OK
+                                </Button>
+
+                            </Box>
+                        </Fade>
+                    </Modal>
+
+
                     <Paper
                         variant="outlined"
                         sx={{ my: { xs: 3 }, mx: { xs: 3 }, p: { xs: 2, } }}
                     >
-                        <div className="px-6 py-5 font-semibold border-b border-gray-100">Ration Search</div>
+                        {/* <div className="px-6 py-5 font-semibold border-b border-gray-100">Ration Search</div> */}
 
+                        <Typography style={{ fontSize: 16, marginBottom: 24 }} >
+                            Ration Search
+                        </Typography>
 
-
-
-
+                        <Snackbar
+                            anchorOrigin={{ vertical, horizontal }}
+                            open={open}
+                            onClose={handleClose}
+                            message={snackDetails.message}
+                            key={vertical + horizontal}
+                        />
 
                         {!showForm &&
                             <div>
@@ -346,7 +502,7 @@ function Dashboard(props) {
                                         fullWidth
                                         variant="contained"
                                         sx={{ mt: 3, mb: 2 }}
-                                        style={{ backgroundColor: 'blue' }}
+                                        // style={{ backgroundColor: 'blue' }}
 
                                         onClick={() => {
                                             console.log(selectedItems, "Asdqwoijdlakmfqdwal")

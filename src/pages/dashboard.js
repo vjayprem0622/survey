@@ -65,6 +65,9 @@ function Dashboard(props) {
     const [checked, setChecked] = React.useState([0]);
 
 
+    const [wardId, setWardId] = React.useState([0]);
+
+
     const [dashboardCount, setdashboardCount] = React.useState({ totalFamilyCount: 0, totalMemberCount: 0, wardFamilyCount: 0, wardMemberCount: 0 });
 
 
@@ -135,7 +138,7 @@ function Dashboard(props) {
                 const { wardNo, wardName, municipalName, municipalId, id, districtCode } = ulb || {};
                 if (wardNo) {
 
-
+                    setWardId(id)
 
                     // getDashboard(id);
                     dispatch(onDashboard(id, token))
@@ -189,7 +192,7 @@ function Dashboard(props) {
 
     return (
         <Layout>
-            <Container dashboardData={dashboardCount} />
+            <Container dashboardData={dashboardCount} wardId={wardId} />
         </Layout>
 
     );

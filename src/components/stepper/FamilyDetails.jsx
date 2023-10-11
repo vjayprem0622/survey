@@ -954,18 +954,33 @@ export default function FamilyDetails(props) {
 
                 <Grid item xs={12} sm={4} mt={3}>
 
-                    <TextField
-                        fullWidth
-                        required
-                        id="outlined-multiline-static"
-                        label="Enter Address (House Number / Building Name)"
-                        defaultValue={address}
-                        maxRows={3}
-                        multiline
-                        onChange={(event) => {
-                            setaddress(event.target.value);
-                        }}
-                    />
+
+                    <div>
+                        <TextField
+                            fullWidth
+                            id="outlined-multiline-static"
+                            label="Multiline"
+                            multiline
+                            rows={4}
+                            defaultValue={address}
+                            onChange={(event) => {
+                                setaddress(event.target.value);
+                            }}
+                        />
+
+                        <TextField
+                            fullWidth
+                            required
+                            label="Enter Address (House Number / Building Name)"
+                            defaultValue={address}
+                            maxRows={3}
+                            multiline
+                            onChange={(event) => {
+                                setaddress(event.target.value);
+                            }}
+                        />
+
+                    </div>
                 </Grid>
             </Grid>
 

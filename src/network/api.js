@@ -3,7 +3,7 @@ import axios from 'axios'
 import { getToken } from '../utils/cookie';
 
 const axiosInstance = axios.create({
-  baseURL: 'http://himstaging1.hp.gov.in/urban-dept', // Set your API base URL
+  baseURL: 'https://himstaging1.hp.gov.in/urban-dept', // Set your API base URL
 })
 
 const tokenData = getToken();

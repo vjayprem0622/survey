@@ -37,16 +37,23 @@ import { saveToken } from '../utils/cookie';
 
 import login from "../pages/api/signIn"
 
+const img = require("../../public/himachal_bg.jpeg");
+const styling = {
+  backgroundImage: `url('${img}')`,
+  width: "100%",
+  height: "100%"
+}
+
 
 
 function Copyright(props) {
   return (
-    <Typography variant="body2" color="text.secondary" align="center" {...props}>
-      {'Copyright © '}
+    <Typography variant="body2" color="primary" align="center" {...props}>
+      {'©'}
       < Link color="inherit" href="www.google.com" >
-        Website or Organization Name
+        2023 Department of Digital Technology and Governance
       </Link>{''}
-      {new Date().getFullYear()}
+      {/* {new Date().getFullYear()} */}
       {'.'}
     </Typography>
   );
@@ -55,7 +62,6 @@ function Copyright(props) {
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
-const defaultTheme = createTheme();
 
 export default function SignIn(props) {
 
@@ -64,6 +70,11 @@ export default function SignIn(props) {
   const data = useSelector((state) => state.login);
 
   const router = useRouter();
+
+  const [username, setUsername] = React.useState("");
+  const [password, setPassword] = React.useState("");
+
+
 
   useEffect(() => {
 
@@ -120,7 +131,8 @@ export default function SignIn(props) {
   };
 
   return (
-    <ThemeProvider theme={defaultTheme} >
+    <div className={"background"}>
+
 
       <Grid
         container
@@ -128,12 +140,11 @@ export default function SignIn(props) {
         direction="column"
         alignItems="center"
         justifyContent="center"
-        sx={{ minHeight: '100vh', }
+        sx={{ minHeight: '100vh' }
         }
       >
-        <Paper elevation={10} style={{ padding: 10 }}>
+        <Paper elevation={15} style={{ margin: 20, padding: 10, borderRadius: 10 }}>
           <Container component="main" maxWidth="xs" >
-            <CssBaseline />
             < Box
               sx={{
                 marginTop: 2,
@@ -142,16 +153,43 @@ export default function SignIn(props) {
                 alignItems: 'center',
               }}
             >
-              < Logo />
+              {/* < Logo /> */}
               < Image
                 src={AppLogo}
-                width={150}
+                width={100}
                 height={100}
                 alt="Logo"
               />
-              <Typography component="h1" variant="h5" >
-                Sign in
+
+
+              <Typography
+                align="center"
+                color="inherit"
+                sx={{
+                  fontSize: '18px',
+                  lineHeight: '28px',
+                  mb: 1
+                }}
+                variant="h3"
+              >
+                Welcome to{' '}
+                <Box
+                  sx={{ color: '#6366F1' }}
+                  target="_blank"
+                >
+                  Himachal Parivar Register (Urban)
+                </Box>
               </Typography>
+
+              <Typography sx={{
+                fontSize: '14px',
+                lineHeight: '28px',
+                mb: 1
+              }}>
+                Please Sign In to Continue
+              </Typography>
+
+
               < Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
                 <TextField
                   margin="normal"
@@ -181,9 +219,6 @@ export default function SignIn(props) {
                   type="submit"
                   fullWidth
                   variant="contained"
-                  sx={{ mt: 3, mb: 2 }}
-                  style={{ backgroundColor: 'blue' }}
-
                   onClick={() => {
                     handlePost()
                   }}
@@ -191,6 +226,9 @@ export default function SignIn(props) {
                 >
                   Sign In
                 </Button>
+
+
+
                 {/* <Grid container>
               <Grid item xs>
                 <Link href="#" variant="body2">
@@ -211,7 +249,6 @@ export default function SignIn(props) {
         </Paper>
 
       </Grid>
-
-    </ThemeProvider>
+    </div>
   );
 }

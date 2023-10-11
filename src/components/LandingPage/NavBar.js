@@ -1,30 +1,59 @@
 import * as React from 'react';
-import PropTypes from 'prop-types';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
-import CssBaseline from '@mui/material/CssBaseline';
-import Divider from '@mui/material/Divider';
-import Drawer from '@mui/material/Drawer';
-import IconButton from '@mui/material/IconButton';
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
-import ListItemButton from '@mui/material/ListItemButton';
-import ListItemText from '@mui/material/ListItemText';
-import MenuIcon from '@mui/icons-material/Menu';
 import Toolbar from '@mui/material/Toolbar';
+import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
+import Menu from '@mui/material/Menu';
+import MenuIcon from '@mui/icons-material/Menu';
+import Container from '@mui/material/Container';
+import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
-import Logo from '../../assets/svg/himachal_logoo.svg'
+import Tooltip from '@mui/material/Tooltip';
+import MenuItem from '@mui/material/MenuItem';
+
+import AppLogo from '../../assets/svg/himachal_logoo.svg'
 import Image from 'next/image';
+import { useRouter } from 'next/router'
+
+import useScrollTrigger from '@mui/material/useScrollTrigger';
+
+import Drawer from '@mui/material/Drawer';
+import { CssBaseline, Divider, List, ListItem, ListItemButton, ListItemText } from '@mui/material';
 
 
 
-const drawerWidth = 240;
-const navItems = ['Home', 'About', 'Contact'];
+const pages = ['Home', 'About', 'Survey ', 'Contact Us', 'FAQs'];
+const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
+const drawerWidth = 340;
 
-function NavBar(props) {
+const ResponsiveAppBar = (props) => {
+    const [anchorElNav, setAnchorElNav] = React.useState(null);
+    const [anchorElUser, setAnchorElUser] = React.useState(null);
+    const router = useRouter()
+
     const { window } = props;
     const [mobileOpen, setMobileOpen] = React.useState(false);
+
+    const container = window !== undefined ? () => window().document.body : undefined;
+
+
+
+
+    const handleOpenNavMenu = (event) => {
+        setAnchorElNav(event.currentTarget);
+    };
+    const handleOpenUserMenu = (event) => {
+        setAnchorElUser(event.currentTarget);
+    };
+
+    const handleCloseNavMenu = () => {
+        setAnchorElNav(null);
+    };
+
+    const handleCloseUserMenu = () => {
+        setAnchorElUser(null);
+    };
 
     const handleDrawerToggle = () => {
         setMobileOpen((prevState) => !prevState);
@@ -32,12 +61,13 @@ function NavBar(props) {
 
     const drawer = (
         <Box onClick={handleDrawerToggle} sx={{ textAlign: 'center' }}>
+
             <Typography variant="h6" sx={{ my: 2 }}>
-                MUI
+                Parivar Register
             </Typography>
             <Divider />
             <List>
-                {navItems.map((item) => (
+                {pages.map((item) => (
                     <ListItem key={item} disablePadding>
                         <ListItemButton sx={{ textAlign: 'center' }}>
                             <ListItemText primary={item} />
@@ -48,48 +78,83 @@ function NavBar(props) {
         </Box>
     );
 
-    const container = window !== undefined ? () => window().document.body : undefined;
 
     return (
         <Box sx={{ display: 'flex' }}>
-            <AppBar component="nav" style={{ background: '#3F63AA' }}>
-                <Toolbar>
 
+            <CssBaseline />
+            <AppBar style={{ position: 'sticky' }}>
+                <Container maxWidth="xxl">
+                    <Toolbar disableGutters variant="dense" style={{ height: 22, }}>
+                        <Box
+                            sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }}
+                        >
+                            < Image
+                                src={AppLogo}
+                                width={45}
+                                height={30}
+                                alt="Logo"
+                                style={{ marginRight: 20 }}
+                            />
+                        </Box>
 
-                    <IconButton
-                        color="inherit"
-                        aria-label="open drawer"
-                        edge="start"
-                        onClick={handleDrawerToggle}
-                        sx={{ mr: 2, display: { sm: 'none' } }}
-                    >
-                        <MenuIcon />
-                    </IconButton>
-                    <Image
-                        priority
-                        src={Logo}
-                        width={50}
-                        height={50}
-                        alt="Follow us on Twitter"
-                    />
+                        <Typography
+                            noWrap
+                            component="div"
+                            sx={{ mr: 2, display: { xs: 'none', md: 'flex' } }}
+                        >
+                            Parivar Register (Urban)
+                        </Typography>
 
-                    {/* < Logo /> */}
-                    <Typography
-                        variant="h6"
-                        component="div"
-                        sx={{ flexGrow: 1, display: { xs: 'none', sm: 'block' } }}
-                    >
-                        Himachal Survey
-                    </Typography>
-                    <Box sx={{ display: { xs: 'none', sm: 'block' } }}>
-                        {navItems.map((item) => (
-                            <Button key={item} sx={{ color: '#fff' }}>
-                                {item}
+                        <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none', } }}>
+                            <IconButton
+                                size="large"
+                                aria-label="account of current user"
+                                aria-controls="menu-appbar"
+                                aria-haspopup="true"
+                                onClick={handleDrawerToggle}
+                                color="inherit"
+                            >
+                                <MenuIcon />
+                            </IconButton>
+
+                        </Box>
+                        <Typography
+                            noWrap
+                            component="div"
+                            sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}
+                        >
+                            Parivar Register (Urban)
+                        </Typography>
+                        <Box sx={{ flexGrow: 1, display: { xs: 'none', md: 'flex', justifyContent: 'center' } }}>
+                            {pages.map((page) => (
+                                <Button
+                                    key={page}
+                                    onClick={handleCloseNavMenu}
+                                    sx={{ color: 'white', display: 'block', ml: 4, mr: 4 }}
+                                >
+                                    {page}
+                                </Button>
+                            ))}
+                        </Box>
+
+                        <Box sx={{ flexGrow: 0 }}>
+
+                            <Button
+                                key={"button"}
+                                onClick={() => router.push("login")}
+                                sx={{ my: 2, color: 'white', display: 'block' }}
+                            >
+                                Login
                             </Button>
-                        ))}
-                    </Box>
-                </Toolbar>
+
+
+                        </Box>
+                    </Toolbar>
+                </Container>
             </AppBar>
+
+
             <nav>
                 <Drawer
                     container={container}
@@ -100,60 +165,15 @@ function NavBar(props) {
                         keepMounted: true, // Better open performance on mobile.
                     }}
                     sx={{
-                        display: { xs: 'block', sm: 'none', },
+                        display: { xs: 'block', sm: 'none' },
                         '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
                     }}
                 >
                     {drawer}
                 </Drawer>
             </nav>
-            <Box component="main" sx={{ p: 3 }}>
-                <Toolbar />
-                <Typography>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Similique unde
-                    fugit veniam eius, perspiciatis sunt? Corporis qui ducimus quibusdam,
-                    aliquam dolore excepturi quae. Distinctio enim at eligendi perferendis in
-                    cum quibusdam sed quae, accusantium et aperiam? Quod itaque exercitationem,
-                    at ab sequi qui modi delectus quia corrupti alias distinctio nostrum.
-                    Minima ex dolor modi inventore sapiente necessitatibus aliquam fuga et. Sed
-                    numquam quibusdam at officia sapiente porro maxime corrupti perspiciatis
-                    asperiores, exercitationem eius nostrum consequuntur iure aliquam itaque,
-                    assumenda et! Quibusdam temporibus beatae doloremque voluptatum doloribus
-                    soluta accusamus porro reprehenderit eos inventore facere, fugit, molestiae
-                    ab officiis illo voluptates recusandae. Vel dolor nobis eius, ratione atque
-                    soluta, aliquam fugit qui iste architecto perspiciatis. Nobis, voluptatem!
-                    Cumque, eligendi unde aliquid minus quis sit debitis obcaecati error,
-                    delectus quo eius exercitationem tempore. Delectus sapiente, provident
-                    corporis dolorum quibusdam aut beatae repellendus est labore quisquam
-                    praesentium repudiandae non vel laboriosam quo ab perferendis velit ipsa
-                    deleniti modi! Ipsam, illo quod. Nesciunt commodi nihil corrupti cum non
-                    fugiat praesentium doloremque architecto laborum aliquid. Quae, maxime
-                    recusandae? Eveniet dolore molestiae dicta blanditiis est expedita eius
-                    debitis cupiditate porro sed aspernatur quidem, repellat nihil quasi
-                    praesentium quia eos, quibusdam provident. Incidunt tempore vel placeat
-                    voluptate iure labore, repellendus beatae quia unde est aliquid dolor
-                    molestias libero. Reiciendis similique exercitationem consequatur, nobis
-                    placeat illo laudantium! Enim perferendis nulla soluta magni error,
-                    provident repellat similique cupiditate ipsam, et tempore cumque quod! Qui,
-                    iure suscipit tempora unde rerum autem saepe nisi vel cupiditate iusto.
-                    Illum, corrupti? Fugiat quidem accusantium nulla. Aliquid inventore commodi
-                    reprehenderit rerum reiciendis! Quidem alias repudiandae eaque eveniet
-                    cumque nihil aliquam in expedita, impedit quas ipsum nesciunt ipsa ullam
-                    consequuntur dignissimos numquam at nisi porro a, quaerat rem repellendus.
-                    Voluptates perspiciatis, in pariatur impedit, nam facilis libero dolorem
-                    dolores sunt inventore perferendis, aut sapiente modi nesciunt.
-                </Typography>
-            </Box>
+
         </Box>
     );
-}
-
-NavBar.propTypes = {
-    /**
-     * Injected by the documentation to work in an iframe.
-     * You won't need it on your project.
-     */
-    window: PropTypes.func,
 };
-
-export default NavBar;
+export default ResponsiveAppBar;

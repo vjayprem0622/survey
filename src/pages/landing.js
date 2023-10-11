@@ -1,31 +1,89 @@
-import Head from 'next/head'
-import SignIn from '../pages/login';
+import React from 'react';
+import { Breadcrumb, Layout, Menu, theme } from 'antd';
 
-// import { useSession } from "next-auth/react"
-import Dashboard from './dashboard';
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { Carousel } from "react-responsive-carousel";
 
-import { getToken } from '../utils/cookie';
-import Navbar from '../components/LandingPage/NavBar';
-import Header from '../components/LandingPage/Header';
+import NavBar from '../components/LandingPage/NavBar'
+import { Box, Grid, Paper, Typography } from '@mui/material';
 
-export default function Home() {
-
-    // const { data: session, status } = useSession()
-
-    const token = getToken();
-
-    const { ulb, token: userToken, userName } = token || {};
+import Slider from '../components/LandingPage/Slider';
+import TopBar from '../components/LandingPage/TopBar';
+import SectionComponent from '../components/LandingPage/main/SectionComponent';
+import SubSection from '../components/LandingPage/main/SubSection';
+import Hero from '../components/LandingPage/main/Hero';
 
 
-
-    console.log(token, "asljkdnakldasdasdasdadksl")
-
+const { Header, Content, Footer } = Layout;
+const App = () => {
+    const {
+        token: { colorBgContainer },
+    } = theme.useToken();
     return (
-        <div>
-            <div className="flex w-screen h-screen" >
-                <Header />
-            </div>
 
-        </div>
-    )
-}
+        <Layout>
+            <TopBar />
+
+
+            <NavBar />
+            <Content
+                className="site-layout"
+                style={{
+                }}
+            >
+                <div
+                    style={{
+                        background: colorBgContainer,
+                    }}
+                >
+
+
+                    <Hero />
+
+
+
+
+
+
+                    <SubSection />
+
+                    {/* <SectionComponent /> */}
+                    <Grid >
+
+                    </Grid>
+                </div>
+            </Content>
+
+            <Box sx={{ flexGrow: 1 }} style={{
+                display: 'flex',
+                alignItems: 'center',
+                miHeight: '10vh',
+                padding: '20px',
+                justifyContent: 'center',
+                backgroundColor: '#f2f0f1',
+                flexDirection: 'column',
+            }}>
+                {/* <Typography style={{
+                    paddingBottom: '10px',
+                }}>
+                    Provided by{' '}
+
+                </Typography> */}
+                <Typography style={{
+                    opacity: '0.4',
+                }}>
+                    Designed & developed by DIT
+                </Typography>
+            </Box>
+
+            {/* <Footer
+                style={{
+                    textAlign: 'center',
+                }}
+            >
+                DIT ©2023 All Rights Reserved
+            </Footer> */}
+        </Layout>
+    );
+};
+export default App;

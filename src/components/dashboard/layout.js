@@ -29,7 +29,7 @@ import HomeIcon from '@mui/icons-material/Home';
 import Loading from '../Loader';
 
 
-const drawerWidth = 230;
+const drawerWidth = 260;
 
 
 const FireNav = styled(List)({
@@ -80,7 +80,7 @@ function Layout(props) {
 
     const drawer = (
         <div style={{}}>
-            <Toolbar>
+            <Toolbar >
 
                 <Image
                     src={AppLogo}
@@ -90,7 +90,7 @@ function Layout(props) {
                 />
 
                 <Typography variant="h6" noWrap component="div" marginLeft={2}>
-                    Him Parivar
+                    Parivar Register<br /> (Urban)
                 </Typography>
 
             </Toolbar>
@@ -100,8 +100,8 @@ function Layout(props) {
             <List style={{ marginTop: 20 }}>
                 {['Dashboard', 'Survey', 'Registration'].map((text, index) => (
                     <ListItem key={text} disablePadding
-                        sx={{ borderRight: pathName.startsWith("/" + text.toLowerCase()) ? '3px solid #5569ff   ' : '0px solid #FFFFFF' }}
-                        className={pathName.startsWith("/" + text.toLowerCase()) ? " text-[#5569ff] bg-[#f2f5f9] bg-white" : "text-slate-700"}
+                        sx={{ borderRight: pathName.startsWith("/" + text.toLowerCase()) ? '4px solid #074465   ' : '0px solid #FFFFFF' }}
+                        className={pathName.startsWith("/" + text.toLowerCase()) ? " text-[#074465] bg-[#f2f5f9] bg-white" : "text-slate-700"}
                         // style={{ color: pathName.startsWith("/" + text.toLowerCase()) ? "text-sky-600 bg-slate-100" : "text-slate-700" }}
 
                         onClick={() => router.push("/" + text.toLowerCase())}
@@ -112,7 +112,7 @@ function Layout(props) {
 
                             <ListItemIcon
                                 // className={pathName.startsWith("/" + text.toLowerCase()) ? "bg-[#e6f5ff] bg-white" : "text-slate-700"}
-                                className={pathName.startsWith("/" + text.toLowerCase()) ? "text-[#5569ff]" : "text-slate-700"}
+                                className={pathName.startsWith("/" + text.toLowerCase()) ? "text-[#074465]" : "text-slate-700"}
 
 
                             >
@@ -121,7 +121,7 @@ function Layout(props) {
                             <ListItemText sx={{
                                 transition: 'color 0.3s', // Add a smooth color transition effect
                                 '&:hover': {
-                                    color: '#5569ff', // Change the text color on hover
+                                    color: "#074465", // Change the text color on hover
                                 },
                             }} primaryTypographyProps={{ fontSize: '14px' }} primary={text} />
                         </ListItemButton>
@@ -131,14 +131,26 @@ function Layout(props) {
             <Divider />
             <List>
                 {['About Us', 'Contact Us'].map((text, index) => (
-                    <ListItem key={text} disablePadding>
+                    <ListItem key={text} disablePadding className={pathName.startsWith("/" + text.toLowerCase()) ? " text-[#074465] bg-[#f2f5f9] bg-white" : "text-slate-700"}
+
+
+                    >
                         <ListItemButton>
                             <ListItemIcon
 
                             >
                                 {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
                             </ListItemIcon>
-                            <ListItemText primary={text} />
+
+                            <ListItemText sx={{
+                                transition: 'color 0.3s', // Add a smooth color transition effect
+                                '&:hover': {
+                                    color: "#074465", // Change the text color on hover
+                                },
+                            }} primaryTypographyProps={{ fontSize: '14px' }} primary={text} />
+
+
+                            {/* <ListItemText primary={text} /> */}
                         </ListItemButton>
                     </ListItem>
                 ))}
@@ -152,7 +164,6 @@ function Layout(props) {
         <Box sx={{ display: 'flex', }}>
             <AppBar
                 position="fixed"
-                elevation={0}
                 enableColorOnDark={false}
                 sx={{
                     width: { sm: `calc(100% - ${drawerWidth}px)` },
@@ -197,7 +208,7 @@ function Layout(props) {
             </AppBar>
             <Box
                 component="nav"
-                sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0, } }}
+                sx={{ width: { sm: drawerWidth }, flexShrink: { sm: 0, }, }}
                 aria-label="mailbox folders"
             >
                 {/* The implementation can be swapped with js to avoid SEO duplication of links. */}
@@ -211,7 +222,7 @@ function Layout(props) {
                     }}
                     sx={{
                         display: { xs: 'block', sm: 'none' },
-                        '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+                        '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth, borderWidth: 0, },
                     }}
 
 
@@ -220,10 +231,10 @@ function Layout(props) {
                 </Drawer>
                 <Drawer
                     variant="permanent"
-
                     anchor="left"
                     PaperProps={{
                         style: {
+
                             backgroundColor: '#FFFFFF', // Set your desired background color here
                             // boxShadow: '2px 0px 10px rgba(0, 0, 0, 0.2)',
                             overflow: 'hidden'
@@ -231,7 +242,7 @@ function Layout(props) {
                     }}
                     sx={{
                         display: { xs: 'none', sm: 'block' },
-                        '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth },
+                        '& .MuiDrawer-paper': { boxSizing: 'border-box', width: drawerWidth, borderWidth: 0 },
                     }}
 
                     open
@@ -245,7 +256,8 @@ function Layout(props) {
                     minHeight: '100vh',
                     backgroundColor: '#f2f5f9',
                     margin: 0,
-                    padding: 0
+                    padding: 0,
+                    borderRadius: 5
 
                 }}
             >
@@ -254,20 +266,13 @@ function Layout(props) {
                 {/* <React.Suspense fallback={<Loading />}>{children}</React.Suspense> */}
 
 
-                <main class="flex-none transition-all">{children}</main>
+                <main className="flex-none transition-all">{children}</main>
 
             </Box>
         </Box >
     );
 }
 
-Layout.propTypes = {
-    /**
-     * Injected by the documentation to work in an iframe.
-     * You won't need it on your project.
-     */
-    window: PropTypes.func,
-    children: PropTypes.array
-};
+
 
 export default Layout;

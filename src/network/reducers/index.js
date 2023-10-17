@@ -17,7 +17,7 @@ import municipality_reducer from './municipality';
 import ward_reducer from './ward';
 import familyDetail from './familyDetail';
 import familiesList from './familiesList';
-import familiesDetail from './familiesDetailApi';
+import familiesDetailApi from './familiesDetailApi';
 
 const rootReducer = combineReducers({
   login,
@@ -37,7 +37,7 @@ const rootReducer = combineReducers({
   ward_reducer,
   familyDetail,
   familiesList,
-  familiesDetail
+  familiesDetailApi
 
 });
 

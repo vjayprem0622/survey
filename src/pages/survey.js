@@ -68,7 +68,7 @@ import {
     UploadFile,
     Work,
 } from "@mui/icons-material";
-import { Button, Card } from "@mui/material";
+import { Alert, Button, Card } from "@mui/material";
 import LinearStepper from '../components/stepper/LinearStepper'
 import SearchBar from "../components/SearchBar";
 import { onRationDetails } from "../network/actions/rationSearch";
@@ -296,7 +296,7 @@ function Dashboard(props) {
             if (rationData?.error) {
                 if (has404) {
                     if (rationData.data.length == 0) {
-                        setSnackDetails({ color: "red", message: "No Member Found" })
+                        setSnackDetails({ color: "error", message: "No Member Found" })
                         setState({ ...{ vertical: 'top', horizontal: 'right' }, open: true });
 
 
@@ -412,7 +412,7 @@ function Dashboard(props) {
                                 <Button
                                     fullWidth
                                     variant="contained"
-                                    style={{ backgroundColor: 'rgb(59 130 246)', height: 54, borderRadius: 0 }}
+                                    style={{ backgroundColor: '#074465', height: 54, borderRadius: 0 }}
                                     onClick={() => {
                                         setopenInfo(false);
                                     }}
@@ -439,9 +439,16 @@ function Dashboard(props) {
                             anchorOrigin={{ vertical, horizontal }}
                             open={open}
                             onClose={handleClose}
-                            message={snackDetails.message}
+                            // message={snackDetails.message}
+                            // color={snackDetails.color}
+                            // style={{ backgroundColor: snackDetails.color }}
                             key={vertical + horizontal}
-                        />
+                        >
+                            {/* <Alert onClose={handleClose} severity={snackDetails.message} sx={{ width: '100%' }}>
+                                This is a success message!
+                            </Alert> */}
+
+                        </Snackbar>
 
                         {!showForm &&
                             <div>
@@ -457,7 +464,7 @@ function Dashboard(props) {
                                             type="submit"
                                             fullWidth
                                             variant="contained"
-                                            style={{ backgroundColor: 'rgb(59 130 246)', height: 54 }}
+                                            style={{ backgroundColor: '#074465', height: 54 }}
                                             onClick={() => {
                                                 searchRationCard()
                                             }}

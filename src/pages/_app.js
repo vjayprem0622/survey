@@ -18,9 +18,9 @@ import { createTheme } from '../theme';
 import { ThemeProvider } from '@mui/material';
 import { CssBaseline } from '@mui/material';
 import { BrowserRouter as Router } from 'react-router-dom';
-import { Rubik } from 'next/font/google'
+// import { Rubik } from '@next/font/google'
 
-const inter = Rubik({ subsets: ['latin'] })
+// const inter = Rubik({ subsets: ['latin'] })
 
 
 export default function App(props) {
@@ -60,7 +60,7 @@ export default function App(props) {
         <Provider store={store}>
           <StepsProvider>
 
-            <main className={inter.className}>
+            <main >
               <Component {...pageProps} />
             </main>
 

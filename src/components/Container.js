@@ -375,403 +375,403 @@ const Dashboard = (props) => {
 
 
     return (
-        <>
-            <main className="p-6 space-y-6">
-                <Grid xs={12}>
-                    <TopCard
-                        top_header_data={[
-                            {
-                                label: 'TOTAL FAMILY',
-                                value: totalFamilyCount,
-                                color: "red"
-                            },
-                            {
-                                label: 'TOTAL MEMBER',
-                                value: totalMemberCount,
-                                color: "blue"
-                            },
-                            {
-                                label: 'WARD FAMILY',
-                                value: wardFamilyCount,
-                                color: "green"
-                            },
-                            {
-                                label: 'WARD MEMBERS',
-                                value: wardMemberCount,
-                                color: "orange"
-                            }
-                        ]}
-                    />
+
+        <main className="p-6 space-y-6">
+            <Grid xs={12}>
+                <TopCard
+                    top_header_data={[
+                        {
+                            label: 'TOTAL FAMILY',
+                            value: totalFamilyCount,
+                            color: "red"
+                        },
+                        {
+                            label: 'TOTAL MEMBER',
+                            value: totalMemberCount,
+                            color: "blue"
+                        },
+                        {
+                            label: 'WARD FAMILY',
+                            value: wardFamilyCount,
+                            color: "green"
+                        },
+                        {
+                            label: 'WARD MEMBERS',
+                            value: wardMemberCount,
+                            color: "orange"
+                        }
+                    ]}
+                />
+            </Grid>
+
+            <Grid
+                container
+                sx={{ background: "#FFF", borderRadius: 6 }}
+            >
+                <Grid item xs={12} md={12} lg={12} sx={{ background: "#FFF", borderRadius: 6 }}>
+
+                    <div style={{ display: 'table', tableLayout: 'fixed', width: '100%', maxHeight: "400px" }}>
+
+                        <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+                            <TableContainer sx={{ maxHeight: 400, height: 400 }}>
+                                <Table stickyHeader aria-label="sticky table">
+                                    <TableHead>
+                                        <TableRow>
+                                            {columns.map((column) => (
+                                                <TableCell
+                                                    key={column.id}
+                                                    align={column.align}
+                                                    style={{ minWidth: column.minWidth, background: "#074465", color: "#FFF" }}
+                                                >
+                                                    {column.label}
+                                                </TableCell>
+                                            ))}
+                                        </TableRow>
+                                    </TableHead>
+                                    <TableBody>
+                                        {familyList?.content && familyList?.content
+                                            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                                            .map((row) => {
+                                                return (
+                                                    <TableRow hover role="checkbox" tabIndex={-1} key={row.code} >
+                                                        {columns.map((column) => {
+                                                            const value = row[column.id];
+                                                            return (
+                                                                <TableCell key={column.id} align={column.align} onClick={(handleEvent) => {
+
+                                                                    console.log(row, "Asdjkuiwhqdjwknshfewdsk")
+                                                                    setSelectedItems(row)
+                                                                    setdetailCalled(true);
+                                                                    dispatch(onFamiliesDetailApi(row.himParivarId, row.rationCardNo))
+
+
+                                                                }}>
+                                                                    {column.format && typeof value === 'number'
+                                                                        ? column.format(value)
+                                                                        : value}
+                                                                </TableCell>
+                                                            );
+                                                        })}
+                                                    </TableRow>
+                                                );
+                                            })}
+                                    </TableBody>
+                                </Table>
+                            </TableContainer>
+                            <TablePagination
+                                rowsPerPageOptions={[5, 10, 20]}
+                                component="div"
+                                count={familyList?.content ? familyList?.content.length : 0}
+                                rowsPerPage={rowsPerPage}
+                                page={page}
+                                onPageChange={handleChangePage}
+                                onRowsPerPageChange={handleChangeRowsPerPage}
+                            />
+                        </Paper>
+
+
+                    </div>
+
+
                 </Grid>
 
-                <Grid
-                    container
-                    sx={{ background: "#FFF", borderRadius: 6 }}
+            </Grid>
+
+
+
+
+
+            {/* <div className="px-6 py-5 font-semibold border-b border-gray-100">Ration Search</div> */}
+            <div className="p-4 flex-grow">
+
+
+                <Modal
+                    open={showModal}
+                    onClose={() => { setShowModal(false) }}
+                    aria-labelledby="modal-modal-title"
+                    aria-describedby="modal-modal-description"
                 >
-                    <Grid item xs={12} md={12} lg={12} sx={{ background: "#FFF", borderRadius: 6 }}>
+                    <Box sx={style}>
 
-                        <div style={{ display: 'table', tableLayout: 'fixed', width: '100%', maxHeight: "400px" }}>
+                        <div
+                            style={{
+                            }}
+                        >
 
-                            <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-                                <TableContainer sx={{ maxHeight: 400, height: 400 }}>
-                                    <Table stickyHeader aria-label="sticky table">
-                                        <TableHead>
-                                            <TableRow>
-                                                {columns.map((column) => (
-                                                    <TableCell
-                                                        key={column.id}
-                                                        align={column.align}
-                                                        style={{ minWidth: column.minWidth, background: "#074465", color: "#FFF" }}
-                                                    >
-                                                        {column.label}
-                                                    </TableCell>
-                                                ))}
-                                            </TableRow>
-                                        </TableHead>
-                                        <TableBody>
-                                            {familyList?.content && familyList?.content
-                                                .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                                                .map((row) => {
-                                                    return (
-                                                        <TableRow hover role="checkbox" tabIndex={-1} key={row.code} >
-                                                            {columns.map((column) => {
-                                                                const value = row[column.id];
-                                                                return (
-                                                                    <TableCell key={column.id} align={column.align} onClick={(handleEvent) => {
-
-                                                                        console.log(row, "Asdjkuiwhqdjwknshfewdsk")
-                                                                        setSelectedItems(row)
-                                                                        setdetailCalled(true);
-                                                                        dispatch(onFamiliesDetailApi(row.himParivarId, row.rationCardNo))
-
-
-                                                                    }}>
-                                                                        {column.format && typeof value === 'number'
-                                                                            ? column.format(value)
-                                                                            : value}
-                                                                    </TableCell>
-                                                                );
-                                                            })}
-                                                        </TableRow>
-                                                    );
-                                                })}
-                                        </TableBody>
-                                    </Table>
-                                </TableContainer>
-                                <TablePagination
-                                    rowsPerPageOptions={[5, 10, 20]}
-                                    component="div"
-                                    count={familyList?.content ? familyList?.content.length : 0}
-                                    rowsPerPage={rowsPerPage}
-                                    page={page}
-                                    onPageChange={handleChangePage}
-                                    onRowsPerPageChange={handleChangeRowsPerPage}
-                                />
-                            </Paper>
-
-
-                        </div>
-
-
-                    </Grid>
-
-                </Grid>
-
-
-
-
-
-                {/* <div className="px-6 py-5 font-semibold border-b border-gray-100">Ration Search</div> */}
-                <div className="p-4 flex-grow">
-
-
-                    <Modal
-                        open={showModal}
-                        onClose={() => { setShowModal(false) }}
-                        aria-labelledby="modal-modal-title"
-                        aria-describedby="modal-modal-description"
-                    >
-                        <Box sx={style}>
-
-                            <div
-                                style={{
-                                }}
-                            >
-
-                                <Grid container spacing={2} >
-                                    <Grid item xs={11.5}  >
-                                        <Typography fontWeight='600' style={{ fontSize: 20 }} color="black">
-                                            Member Details
-                                        </Typography>
-
-
-                                    </Grid>
-
-                                    <Grid item xs={0.5} style={{ justifyContent: 'flex-end', alignContent: 'flex-end', alignItems: 'flex-end' }} >
-                                        <IconButton aria-label="delete" size="small" onClick={() => setShowModal(false)}>
-                                            <HighlightOffIcon fontSize="medium" />
-                                        </IconButton>
-                                    </Grid>
+                            <Grid container spacing={2} >
+                                <Grid item xs={11.5}  >
+                                    <Typography fontWeight='600' style={{ fontSize: 20 }} color="black">
+                                        Member Details
+                                    </Typography>
 
 
                                 </Grid>
 
-                                <Divider variant="fullWidth" horizontal style={{ marginTop: 10, marginBottom: 10 }} />
+                                <Grid item xs={0.5} style={{ justifyContent: 'flex-end', alignContent: 'flex-end', alignItems: 'flex-end' }} >
+                                    <IconButton aria-label="delete" size="small" onClick={() => setShowModal(false)}>
+                                        <HighlightOffIcon fontSize="medium" />
+                                    </IconButton>
+                                </Grid>
+
+
+                            </Grid>
+
+                            <Divider variant="fullWidth" horizontal style={{ marginTop: 10, marginBottom: 10 }} />
 
 
 
-                                {selectedFamily?.members && selectedFamily?.members.map((memberObject, index) => {
+                            {selectedFamily?.members && selectedFamily?.members.map((memberObject, index) => {
 
-                                    return (
+                                return (
 
-                                        <>
-                                            <Paper elevation={3} variant="elevation" style={{ marginBottom: 16 }}>
+                                    <>
+                                        <Paper elevation={3} variant="elevation" style={{ marginBottom: 16 }}>
 
-                                                <Typography style={{ fontSize: 16, fontWeight: 'bold', letterSpacing: 0.5, background: "#074465", padding: 10, color: '#FFF' }} >
-                                                    Member Name: {memberObject.memberName}
-                                                </Typography>
+                                            <Typography style={{ fontSize: 16, fontWeight: 'bold', letterSpacing: 0.5, background: "#074465", padding: 10, color: '#FFF' }} >
+                                                Member Name: {memberObject.memberName}
+                                            </Typography>
 
-                                                <Box style={{ padding: 10 }}>
-
-
-                                                    <Grid container spacing={1} >
-                                                        <Grid item xs={12} sm={2}>
-                                                            <Typography style={{ fontSize: 14, fontWeight: 'bold', letterSpacing: 0.5 }} >
-                                                                Name:
-                                                            </Typography>
+                                            <Box style={{ padding: 10 }}>
 
 
-                                                        </Grid>
+                                                <Grid container spacing={1} >
+                                                    <Grid item xs={12} sm={2}>
+                                                        <Typography style={{ fontSize: 14, fontWeight: 'bold', letterSpacing: 0.5 }} >
+                                                            Name:
+                                                        </Typography>
 
-                                                        <Grid item xs={12} sm={4} >
-
-                                                            <Typography style={{ fontSize: 14, letterSpacing: 0.5 }} >
-                                                                {memberObject.memberName}
-                                                            </Typography>
-
-
-                                                        </Grid>
-
-
-
-                                                        <Grid item xs={12} sm={2}>
-                                                            <Typography style={{ fontSize: 14, fontWeight: 'bold', letterSpacing: 0.5 }} >
-                                                                Date of Birth:
-                                                            </Typography>
-
-
-                                                        </Grid>
-
-                                                        <Grid item xs={12} sm={4}>
-
-                                                            <Typography style={{ fontSize: 14, letterSpacing: 0.5 }} >
-                                                                {memberObject.dateOfBirth}
-                                                            </Typography>
-
-
-                                                        </Grid>
 
                                                     </Grid>
 
+                                                    <Grid item xs={12} sm={4} >
 
-                                                    <Grid container spacing={1} mt={1} >
-                                                        <Grid item xs={12} sm={2}>
-                                                            <Typography style={{ fontSize: 14, fontWeight: 'bold', letterSpacing: 0.5 }} >
-                                                                Gender:
-                                                            </Typography>
+                                                        <Typography style={{ fontSize: 14, letterSpacing: 0.5 }} >
+                                                            {memberObject.memberName}
+                                                        </Typography>
 
-
-                                                        </Grid>
-
-                                                        <Grid item xs={12} sm={4} >
-
-                                                            <Typography style={{ fontSize: 14, letterSpacing: 0.5 }} >
-                                                                {memberObject.gender}
-                                                            </Typography>
-
-
-                                                        </Grid>
-
-
-
-                                                        <Grid item xs={12} sm={2}>
-                                                            <Typography style={{ fontSize: 14, fontWeight: 'bold', letterSpacing: 0.5 }} >
-                                                                Qualification:
-                                                            </Typography>
-
-
-                                                        </Grid>
-
-                                                        <Grid item xs={12} sm={4}>
-
-                                                            <Typography style={{ fontSize: 14, letterSpacing: 0.5 }} >
-                                                                {memberObject.educationQualification}
-                                                            </Typography>
-
-                                                        </Grid>
 
                                                     </Grid>
 
 
 
-
-                                                    <Grid container spacing={1} mt={1} >
-                                                        <Grid item xs={12} sm={2}>
-                                                            <Typography style={{ fontSize: 14, fontWeight: 'bold', letterSpacing: 0.5 }} >
-                                                                Relation:
-                                                            </Typography>
+                                                    <Grid item xs={12} sm={2}>
+                                                        <Typography style={{ fontSize: 14, fontWeight: 'bold', letterSpacing: 0.5 }} >
+                                                            Date of Birth:
+                                                        </Typography>
 
 
-                                                        </Grid>
+                                                    </Grid>
 
-                                                        <Grid item xs={12} sm={4} >
+                                                    <Grid item xs={12} sm={4}>
 
-                                                            <Typography style={{ fontSize: 14, letterSpacing: 0.5 }} >
-                                                                {memberObject.relation}
-                                                            </Typography>
-
-
-                                                        </Grid>
+                                                        <Typography style={{ fontSize: 14, letterSpacing: 0.5 }} >
+                                                            {memberObject.dateOfBirth}
+                                                        </Typography>
 
 
+                                                    </Grid>
 
-                                                        <Grid item xs={12} sm={2}>
-                                                            <Typography style={{ fontSize: 14, fontWeight: 'bold', letterSpacing: 0.5 }} >
-                                                                Relative Name:
-                                                            </Typography>
+                                                </Grid>
 
 
-                                                        </Grid>
-
-                                                        <Grid item xs={12} sm={4}>
-
-                                                            <Typography style={{ fontSize: 14, letterSpacing: 0.5 }} >
-                                                                {memberObject.relativeName}
-                                                            </Typography>
+                                                <Grid container spacing={1} mt={1} >
+                                                    <Grid item xs={12} sm={2}>
+                                                        <Typography style={{ fontSize: 14, fontWeight: 'bold', letterSpacing: 0.5 }} >
+                                                            Gender:
+                                                        </Typography>
 
 
-                                                        </Grid>
+                                                    </Grid>
+
+                                                    <Grid item xs={12} sm={4} >
+
+                                                        <Typography style={{ fontSize: 14, letterSpacing: 0.5 }} >
+                                                            {memberObject.gender}
+                                                        </Typography>
+
 
                                                     </Grid>
 
 
 
-                                                    <Grid container spacing={1} mt={1} >
-                                                        <Grid item xs={12} sm={2}>
-                                                            <Typography style={{ fontSize: 14, fontWeight: 'bold', letterSpacing: 0.5 }} >
-                                                                Ration Number::
-                                                            </Typography>
+                                                    <Grid item xs={12} sm={2}>
+                                                        <Typography style={{ fontSize: 14, fontWeight: 'bold', letterSpacing: 0.5 }} >
+                                                            Qualification:
+                                                        </Typography>
 
 
-                                                        </Grid>
+                                                    </Grid>
 
-                                                        <Grid item xs={12} sm={4} >
+                                                    <Grid item xs={12} sm={4}>
 
-                                                            <Typography style={{ fontSize: 14, letterSpacing: 0.5 }} >
-                                                                {memberObject.rationCardNumber}
-                                                            </Typography>
+                                                        <Typography style={{ fontSize: 14, letterSpacing: 0.5 }} >
+                                                            {memberObject.educationQualification}
+                                                        </Typography>
 
+                                                    </Grid>
 
-                                                        </Grid>
-
-
-
-                                                        <Grid item xs={12} sm={2}>
-                                                            <Typography style={{ fontSize: 14, fontWeight: 'bold', letterSpacing: 0.5 }} >
-                                                                Aadhaar Number:
-                                                            </Typography>
+                                                </Grid>
 
 
-                                                        </Grid>
 
-                                                        <Grid item xs={12} sm={4}>
 
-                                                            <Typography style={{ fontSize: 14, letterSpacing: 0.5 }} >
-                                                                {memberObject.aadhaarNumber}
-                                                            </Typography>
+                                                <Grid container spacing={1} mt={1} >
+                                                    <Grid item xs={12} sm={2}>
+                                                        <Typography style={{ fontSize: 14, fontWeight: 'bold', letterSpacing: 0.5 }} >
+                                                            Relation:
+                                                        </Typography>
 
-                                                        </Grid>
+
+                                                    </Grid>
+
+                                                    <Grid item xs={12} sm={4} >
+
+                                                        <Typography style={{ fontSize: 14, letterSpacing: 0.5 }} >
+                                                            {memberObject.relation}
+                                                        </Typography>
+
 
                                                     </Grid>
 
 
 
-                                                    <Grid container spacing={1} mt={1} >
-                                                        <Grid item xs={12} sm={2}>
-                                                            <Typography style={{ fontSize: 14, fontWeight: 'bold', letterSpacing: 0.5 }} >
-                                                                Mobile Number:
-                                                            </Typography>
+                                                    <Grid item xs={12} sm={2}>
+                                                        <Typography style={{ fontSize: 14, fontWeight: 'bold', letterSpacing: 0.5 }} >
+                                                            Relative Name:
+                                                        </Typography>
 
 
-                                                        </Grid>
+                                                    </Grid>
 
-                                                        <Grid item xs={12} sm={4} >
+                                                    <Grid item xs={12} sm={4}>
 
-                                                            <Typography style={{ fontSize: 14, letterSpacing: 0.5 }} >
-                                                                {memberObject.mobileNumber}
-                                                            </Typography>
-
-
-                                                        </Grid>
+                                                        <Typography style={{ fontSize: 14, letterSpacing: 0.5 }} >
+                                                            {memberObject.relativeName}
+                                                        </Typography>
 
 
+                                                    </Grid>
 
-                                                        <Grid item xs={12} sm={2}>
-                                                            <Typography style={{ fontSize: 14, fontWeight: 'bold', letterSpacing: 0.5 }} >
-                                                                E-KYC:
-                                                            </Typography>
+                                                </Grid>
 
 
-                                                        </Grid>
 
-                                                        <Grid item xs={12} sm={4}>
+                                                <Grid container spacing={1} mt={1} >
+                                                    <Grid item xs={12} sm={2}>
+                                                        <Typography style={{ fontSize: 14, fontWeight: 'bold', letterSpacing: 0.5 }} >
+                                                            Ration Number::
+                                                        </Typography>
 
-                                                            <Typography style={{ fontSize: 16, letterSpacing: 0.5 }} >
 
-                                                                {memberObject.isEkycVerfied ?
+                                                    </Grid>
 
-                                                                    <Chip icon={<DoneAllIcon fontSize='small' color='success' />} label="Verified" style={{ height: 20 }} />
-                                                                    : <Chip icon={<ErrorIcon color='error' fontSize='small' />} label="Not Verified" style={{ height: 20 }} />}
+                                                    <Grid item xs={12} sm={4} >
 
-                                                            </Typography>
+                                                        <Typography style={{ fontSize: 14, letterSpacing: 0.5 }} >
+                                                            {memberObject.rationCardNumber}
+                                                        </Typography>
 
-                                                        </Grid>
 
                                                     </Grid>
 
 
-                                                </Box>
-                                            </Paper>
+
+                                                    <Grid item xs={12} sm={2}>
+                                                        <Typography style={{ fontSize: 14, fontWeight: 'bold', letterSpacing: 0.5 }} >
+                                                            Aadhaar Number:
+                                                        </Typography>
+
+
+                                                    </Grid>
+
+                                                    <Grid item xs={12} sm={4}>
+
+                                                        <Typography style={{ fontSize: 14, letterSpacing: 0.5 }} >
+                                                            {memberObject.aadhaarNumber}
+                                                        </Typography>
+
+                                                    </Grid>
+
+                                                </Grid>
+
+
+
+                                                <Grid container spacing={1} mt={1} >
+                                                    <Grid item xs={12} sm={2}>
+                                                        <Typography style={{ fontSize: 14, fontWeight: 'bold', letterSpacing: 0.5 }} >
+                                                            Mobile Number:
+                                                        </Typography>
+
+
+                                                    </Grid>
+
+                                                    <Grid item xs={12} sm={4} >
+
+                                                        <Typography style={{ fontSize: 14, letterSpacing: 0.5 }} >
+                                                            {memberObject.mobileNumber}
+                                                        </Typography>
+
+
+                                                    </Grid>
+
+
+
+                                                    <Grid item xs={12} sm={2}>
+                                                        <Typography style={{ fontSize: 14, fontWeight: 'bold', letterSpacing: 0.5 }} >
+                                                            E-KYC:
+                                                        </Typography>
+
+
+                                                    </Grid>
+
+                                                    <Grid item xs={12} sm={4}>
+
+                                                        <Typography style={{ fontSize: 16, letterSpacing: 0.5 }} >
+
+                                                            {memberObject.isEkycVerfied ?
+
+                                                                <Chip icon={<DoneAllIcon fontSize='small' color='success' />} label="Verified" style={{ height: 20 }} />
+                                                                : <Chip icon={<ErrorIcon color='error' fontSize='small' />} label="Not Verified" style={{ height: 20 }} />}
+
+                                                        </Typography>
+
+                                                    </Grid>
+
+                                                </Grid>
+
+
+                                            </Box>
+                                        </Paper>
 
 
 
 
-                                        </>
+                                    </>
 
 
 
-                                    )
+                                )
 
 
-                                })}
-
-
-
+                            })}
 
 
 
 
-                            </div>
-
-                        </Box>
-                    </Modal>
 
 
-                </div>
 
-            </main>
+                        </div>
 
-        </>
+                    </Box>
+                </Modal>
+
+
+            </div>
+
+        </main>
+
+
     );
 };
 

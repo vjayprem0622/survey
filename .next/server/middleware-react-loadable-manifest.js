@@ -1,1 +1,1 @@
-self.__REACT_LOADABLE_MANIFEST={}
+self.__REACT_LOADABLE_MANIFEST={"../components/LandingPage/Slider.js -> react-owl-carousel":{id:2568,files:["static/chunks/568.a4265a895b471f94.js"]}};

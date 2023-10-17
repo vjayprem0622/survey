@@ -1,21 +1,6 @@
 {
   "/_app": "pages/_app.js",
-  "/api/auth/[...nextauth]": "pages/api/auth/[...nextauth].js",
-  "/_document": "pages/_document.js",
-  "/api/educational-api": "pages/api/educational-api.js",
-  "/api/dashboard-api": "pages/api/dashboard-api.js",
-  "/api/merge-api": "pages/api/merge-api.js",
-  "/api/occupation-api": "pages/api/occupation-api.js",
-  "/api/relation-api": "pages/api/relation-api.js",
-  "/api/signIn": "pages/api/signIn.js",
   "/_error": "pages/_error.js",
-  "/api/gender-api": "pages/api/gender-api.js",
-  "/api/hello": "pages/api/hello.js",
-  "/landing": "pages/landing.html",
-  "/login": "pages/login.html",
-  "/login1": "pages/login1.html",
-  "/": "pages/index.html",
-  "/survey": "pages/survey.html",
-  "/dashboard": "pages/dashboard.html",
-  "/404": "pages/404.html"
+  "/_document": "pages/_document.js",
+  "/dashboard": "pages/dashboard.js"
 }

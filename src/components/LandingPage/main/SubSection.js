@@ -7,7 +7,7 @@ const SubSection = () => {
 
         <Box style={{
             backgroundColor: '#e7f1f6',
-            paddingLeft: 100,
+            paddingLeft: "2.5rem",
             paddingTop: 100
         }}>
 
@@ -74,7 +74,7 @@ const SubSection = () => {
                     <Grid item xs={12} md={6} container justifyContent="center" style={{
 
                     }}>
-                        <img src={'/images/steps/step1.jpg'} alt="My Team" style={{
+                        <img src={'/urban/images/steps/step1.jpg'} alt="My Team" style={{
                             height: 500,
                         }} />
                     </Grid>
@@ -99,7 +99,7 @@ const SubSection = () => {
                     <Grid item xs={12} md={6} container justifyContent="center" style={{
 
                     }}>
-                        <img src={'/images/steps/step1.jpg'} alt="My Team" style={{
+                        <img src={'/urban/images/steps/step2.jpg'} alt="My Team" style={{
                             height: 500,
                         }} />
                     </Grid>
@@ -190,7 +190,7 @@ const SubSection = () => {
                     <Grid item xs={12} md={6} container justifyContent="center" style={{
 
                     }}>
-                        <img src={'/images/steps/step1.jpg'} alt="My Team" style={{
+                        <img src={'/urban/images/steps/step3.jpg'} alt="My Team" style={{
                             height: 500,
                         }} />
                     </Grid>

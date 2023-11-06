@@ -14,13 +14,10 @@ import Container from "../components/Container";
 
 import AccessAlarmIcon from '@mui/icons-material/AccessAlarm';
 
-// import { useSession } from "next-auth/react";
+import withAuth from "../utils/checkCookies";
 
 
-import { signOut } from 'next-auth/react';
 
-
-import { GetServerSideProps } from 'next';
 
 import { onDashboard } from "../network/actions/dashboard";
 import { useDispatch, useSelector } from 'react-redux';
@@ -75,6 +72,7 @@ function Dashboard(props) {
     const globalUser = getToken();
     const router = useRouter();
 
+    console.log(globalUser, "asdjkansdjsdx")
 
     const dispatch = useDispatch();
     const dashboard_data = useSelector((state) => state.dashboard);
@@ -118,13 +116,13 @@ function Dashboard(props) {
 
         let tokenData = {};
 
-        try {
-            tokenData = JSON.parse(globalUser);
-        }
-        catch (err) {
+        // try {
+        //     tokenData = JSON.parse(globalUser);
+        // }
+        // catch (err) {
 
-            console.log(err, "asasdwie")
-        }
+        //     console.log(err, "asasdwie")
+        // }
 
 
         console.log(tokenData, "asjdkjoiqlkmwjefijoqdwlks")
@@ -161,7 +159,6 @@ function Dashboard(props) {
         console.log(dashboard_data, "Asdjkakasdasdqwusdjquakodlw")
 
         if (dashboard_data.error) {
-            console.log(dashboard_data.error, "Asasdasqwdjkakasdasdqwusdjquakodlw")
 
             if (dashboard_data.error.message) {
 
@@ -178,7 +175,6 @@ function Dashboard(props) {
         if (dashboard_data) {
             const { data, message, status } = dashboard_data.data || {};
 
-            console.log(data, "asdoiqakmdlasdqweklfmqamfjewoqdal")
             if (message === "SUCCESS" && status === "OK") {
 
                 setdashboardCount(data);
@@ -198,7 +194,7 @@ function Dashboard(props) {
     );
 }
 
-export default Dashboard;
+export default withAuth(Dashboard);
 
 
 

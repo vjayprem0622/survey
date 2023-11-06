@@ -516,3 +516,14 @@ a {
 strong {
   font-weight: 700;
 }
+
+
+.hoverable-cell {
+  transition: background-color 0.1s;
+  /* Add a smooth transition effect */
+}
+
+.hoverable-cell:hover {
+  background-color: "#e7f1f6";
+  /* Change the background color on hover */
+}

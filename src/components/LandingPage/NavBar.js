@@ -40,6 +40,7 @@ const ResponsiveAppBar = (props) => {
 
 
 
+
     const handleOpenNavMenu = (event) => {
         setAnchorElNav(event.currentTarget);
     };
@@ -83,7 +84,7 @@ const ResponsiveAppBar = (props) => {
         <Box sx={{ display: 'flex' }}>
 
             <CssBaseline />
-            <AppBar style={{ position: 'sticky' }}>
+            <AppBar style={{ position: 'sticky', background: "#074465" }}>
                 <Container maxWidth="xxl">
                     <Toolbar disableGutters variant="dense" style={{ height: 22, }}>
                         <Box

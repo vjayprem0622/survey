@@ -29,7 +29,7 @@ import EmailUpdate from "./EmailUpdate";
 
 
 // Step titles
-const labels = ["Family Details", "Gender", "Date Of Birth", "Enter Family Relations", "Educational Qualifications", "Occupation", "Verify Aadhar", "Property Details", "Mobile Update", "Email Update"];
+const labels = ["Family Details", "Gender", "Date Of Birth", "Family Relations", "Educational Qualifications", "Occupation", "Verify Aadhar", "Property Details", "Mobile Update", "Email Update"];
 const handleSteps = (step, props) => {
     switch (step) {
         case 0:

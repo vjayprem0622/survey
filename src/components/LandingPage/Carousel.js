@@ -49,11 +49,11 @@ export default function CarouselComponent() {
             {bootstrap.map((item) => (
                 <Carousel.Item key={item.id} className={styles.itemP} interval={4000}>
                     <img src={item.imageUrl} alt="slides" />
-                    <Carousel.Caption className={styles.caption}>
+                    {/* <Carousel.Caption className={styles.caption}>
                         <h3>{item.title}</h3>
                         <p>{item.body}</p>
                         <button className="btn btn-danger">Visit Docs</button>
-                    </Carousel.Caption>
+                    </Carousel.Caption> */}
                 </Carousel.Item>
             ))}
         </Carousel>

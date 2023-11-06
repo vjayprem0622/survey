@@ -19,7 +19,7 @@ export const onLogin = (username, password) => {
     try {
 
       console.log("jsoasd")
-      const response = await axios.post('/login', { username: username, password: password });
+      const response = await axios.post('/signIn', JSON.stringify({ username: username, password: password }));
       dispatch(fetchLoginSuccess(response.data));
     } catch (error) {
       dispatch(fetchLoginFailure(error));

@@ -4,9 +4,13 @@ import { getToken } from '../utils/cookie';
 
 const axiosInstance = axios.create({
   baseURL: 'https://himstaging1.hp.gov.in/urban-dept', // Set your API base URL
+  headers: {
+    'Content-Type': 'text/plain', // Set the appropriate content type for your data
+  },
 })
 
 const tokenData = getToken();
+
 
 
 axiosInstance.interceptors.request.use((config) => {

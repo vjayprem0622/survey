@@ -2,6 +2,9 @@
 const webpack = require("webpack");
 const nextConfig = {
   reactStrictMode: true,
+  basePath: '/urban',
+  assetPrefix: '/urban',
+
   webpack: (config, { buildId, dev, isServer, defaultLoaders, webpack }) => {
     config.plugins.push(
       new webpack.ProvidePlugin({

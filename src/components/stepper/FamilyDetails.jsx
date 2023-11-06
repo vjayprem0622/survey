@@ -23,7 +23,7 @@ import { onFamilyData } from '../../network/actions/familyDetail'
 
 import Select from 'react-select'
 
-
+const selectStyles = { menu: styles => ({ ...styles, zIndex: 999 }) };
 
 
 const bonafideHimachali = [
@@ -669,6 +669,7 @@ export default function FamilyDetails(props) {
                     </Typography>
 
                     <Select
+                        styles={selectStyles}
                         closeMenuOnSelect={true}
                         value={familyHead}
                         options={memberList}
@@ -718,6 +719,7 @@ export default function FamilyDetails(props) {
                 <Grid item xs={12} sm={4} mt={3}>
                     <InputLabel style={{ marginBottom: 5 }} id="demo-simple-select-helper-label">Is Head of Family Bonadfide Himachali?</InputLabel>
                     <Select
+                        styles={selectStyles}
                         closeMenuOnSelect={true}
                         value={bonafide}
                         options={bonafideHimachali}
@@ -738,6 +740,7 @@ export default function FamilyDetails(props) {
 
 
                     <Select
+                        styles={selectStyles}
                         closeMenuOnSelect={true}
                         value={economicId}
                         options={economicList}
@@ -771,6 +774,7 @@ export default function FamilyDetails(props) {
                     <InputLabel style={{ marginBottom: 5 }} id="demo-simple-select-helper-label">Religion </InputLabel>
 
                     <Select
+                        styles={selectStyles}
                         closeMenuOnSelect={true}
                         value={religionId}
                         options={religionList}
@@ -801,6 +805,7 @@ export default function FamilyDetails(props) {
 
                     <InputLabel style={{ marginBottom: 5 }} id="demo-simple-select-helper-label">Social Category </InputLabel>
                     <Select
+                        styles={selectStyles}
                         closeMenuOnSelect={true}
                         value={social_catId}
                         options={socialList}
@@ -831,6 +836,7 @@ export default function FamilyDetails(props) {
                     <InputLabel style={{ marginBottom: 5 }} id="demo-simple-select-helper-label">Resident Status </InputLabel>
 
                     <Select
+                        styles={selectStyles}
                         closeMenuOnSelect={true}
                         value={residentId}
                         options={residentList}
@@ -863,6 +869,7 @@ export default function FamilyDetails(props) {
 
 
                     <Select
+                        styles={selectStyles}
                         closeMenuOnSelect={true}
                         value={districtId}
                         options={districtList}
@@ -892,6 +899,7 @@ export default function FamilyDetails(props) {
                     <InputLabel style={{ marginBottom: 5 }} id="demo-simple-select-helper-label">Municipality </InputLabel>
 
                     <Select
+                        styles={selectStyles}
                         closeMenuOnSelect={true}
                         value={municipalId}
                         options={municipalityList}
@@ -923,6 +931,7 @@ export default function FamilyDetails(props) {
 
 
                     <Select
+                        styles={selectStyles}
                         closeMenuOnSelect={true}
                         value={wardId}
                         options={wardList}
@@ -1037,6 +1046,7 @@ export default function FamilyDetails(props) {
 
                     }
                     }
+                    style={{ backgroundColor: 'blue' }}
                 // onClick={!isError() ? handleNext : () => null}
                 >
                     Save and Proceed

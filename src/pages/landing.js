@@ -1,3 +1,4 @@
+"use client"
 import React from 'react';
 import { Breadcrumb, Layout, Menu, theme } from 'antd';
 
@@ -7,18 +8,23 @@ import { Carousel } from "react-responsive-carousel";
 import NavBar from '../components/LandingPage/NavBar'
 import { Box, Grid, Paper, Typography } from '@mui/material';
 
-import Slider from '../components/LandingPage/Slider';
 import TopBar from '../components/LandingPage/TopBar';
 import SectionComponent from '../components/LandingPage/main/SectionComponent';
 import SubSection from '../components/LandingPage/main/SubSection';
 import Hero from '../components/LandingPage/main/Hero';
+import { getToken } from '../utils/cookie';
 
 
 const { Header, Content, Footer } = Layout;
-const App = () => {
+const Landing = () => {
     const {
         token: { colorBgContainer },
     } = theme.useToken();
+
+
+    const token = getToken();
+
+
     return (
 
         <Layout>
@@ -86,4 +92,4 @@ const App = () => {
         </Layout>
     );
 };
-export default App;
+export default Landing;

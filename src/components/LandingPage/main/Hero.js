@@ -57,7 +57,7 @@ const Hero = () => {
 
                 </Grid>
                 <Grid item xs={12} md={5}>
-                    <img src={'/images/banner.jpg'} alt="My Team" style={{
+                    <img src={'/urban/images/banner.jpg'} alt="My Team" style={{
                         width: '100%',
                     }} />
 

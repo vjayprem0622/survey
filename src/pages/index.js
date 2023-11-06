@@ -1,3 +1,4 @@
+"use client"
 import Head from 'next/head'
 import SignIn from '../pages/login';
 
@@ -5,6 +6,7 @@ import SignIn from '../pages/login';
 import Dashboard from './dashboard';
 
 import { getToken } from '../utils/cookie';
+import Landing from './landing';
 
 export default function Home() {
 
@@ -22,9 +24,7 @@ export default function Home() {
     <div>
       <div className="flex w-screen h-screen" >
         <div className="w-screen ">
-          {userToken ?
-            <Dashboard />
-            : <SignIn />}
+          <Landing />
         </div>
       </div>
 

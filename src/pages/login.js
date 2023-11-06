@@ -22,9 +22,10 @@ import axios from '../network/api';
 import Logo from '../assets/BackgroundLogin'
 
 import AppLogo from '../assets/svg/himachal_logoo.svg'
-import { signIn } from 'next-auth/react';
 
 import { useRouter } from 'next/router';
+import Snackbar from '@mui/material/Snackbar';
+import MuiAlert from '@mui/material/Alert';
 
 
 // import { useDispatch, useSelector } from 'react-redux';
@@ -36,6 +37,7 @@ import { saveToken } from '../utils/cookie';
 
 
 import login from "../pages/api/signIn"
+import withAuth from '../utils/checkCookies';
 
 const img = require("../../public/himachal_bg.jpeg");
 const styling = {
@@ -44,6 +46,10 @@ const styling = {
   height: "100%"
 }
 
+
+const Alert = React.forwardRef(function Alert(props, ref) {
+  return <MuiAlert elevation={6} ref={ref} variant="filled" {...props} />;
+});
 
 
 function Copyright(props) {
@@ -63,7 +69,7 @@ function Copyright(props) {
 // TODO remove, this demo shouldn't need to reset the theme.
 
 
-export default function SignIn(props) {
+function SignIn(props) {
 
 
   const dispatch = useDispatch();
@@ -74,21 +80,47 @@ export default function SignIn(props) {
   const [username, setUsername] = React.useState("");
   const [password, setPassword] = React.useState("");
 
+  const [showAlert, setShowAlert] = React.useState(false);
+
+  const [message, setMessage] = React.useState({ message: "", type: "" });
+
+  const [loginCalled, setLoginCalled] = React.useState(false);
+
+
+  const handleClick = () => {
+    setShowAlert(true);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setShowAlert(false);
+  };
 
 
   useEffect(() => {
 
-    const { data: user_data } = data || {};
+    if (loginCalled) {
+      const { data: user_data } = data || {};
 
-    const { token } = user_data || {};
+      const { token } = user_data || {};
 
-    // console.log(JSON.stringify(user_data.data), "asdhiqwuoldkjjfeiqud")
+      setLoginCalled(false)
 
-
-    if (user_data.data) {
-      saveToken(JSON.stringify(user_data.data))
-      router.push('/dashboard')
+      if (user_data.data) {
+        handleClick();
+        saveToken(user_data.data)
+        setMessage({ message: "Access Granted", type: "success" })
+        router.push('/dashboard')
+      }
+      else if (data?.error?.message.includes("401")) {
+        handleClick();
+        setMessage({ message: "Access denied", type: "error" })
+      }
     }
+
 
   }, [data])
 
@@ -97,26 +129,11 @@ export default function SignIn(props) {
 
 
   const handlePost = () => {
+    setLoginCalled(true)
 
-    const param1 = 'value1';
-    const param2 = 'value2';
-
-    // router.push('/dashboard')
-    // fetch(`/api/auth/signIn/`)
-    //   .then((response) => response.json())
-    //   .then((data) => {
-    //     console.log(data, "asjkdmaskdnkjndakd")
-
-
-    //     // Handle the API response here
-    //   })
-    //   .catch((error) => {
-    //     console.log(error, "asjkdmaskdnkjndakd")
-    //     // Handle errors
-    //   });
 
     console.log("asldaskmdalkdalfeiow")
-    dispatch(onLogin("Khaliyar", 1234))
+    dispatch(onLogin(username, password))
 
   };
 
@@ -131,8 +148,24 @@ export default function SignIn(props) {
   };
 
   return (
-    <div className={"background"}>
 
+
+    <div
+      style={{
+        backgroundImage: `url('/urban/himachal_bg.jpeg')`,// Reference the image in the public folder
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        width: '100%',
+        height: '100%', // Set the desired height
+        backgroundColor: 'rgba(0, 0, 0, 0.1)', // 0.5 opacity (adjust as needed)
+      }}
+    >
+
+      <Snackbar open={showAlert} autoHideDuration={6000} onClose={handleClose}>
+        <Alert onClose={handleClose} severity={message.type} sx={{ width: '100%' }}>
+          {message.message}
+        </Alert>
+      </Snackbar>
 
       <Grid
         container
@@ -156,8 +189,8 @@ export default function SignIn(props) {
               {/* < Logo /> */}
               < Image
                 src={AppLogo}
-                width={100}
-                height={100}
+                width={80}
+                height={50}
                 alt="Logo"
               />
 
@@ -199,6 +232,7 @@ export default function SignIn(props) {
                   label="Email Address"
                   name="email"
                   autoComplete="email"
+                  onChange={(event) => setUsername(event.target.value)}
                   autoFocus
                 />
                 <TextField
@@ -209,6 +243,8 @@ export default function SignIn(props) {
                   label="Password"
                   type="password"
                   id="password"
+                  onChange={(event) => setPassword(event.target.value)}
+
                   autoComplete="current-password"
                 />
                 <FormControlLabel
@@ -252,3 +288,5 @@ export default function SignIn(props) {
     </div>
   );
 }
+
+export default withAuth(SignIn);
